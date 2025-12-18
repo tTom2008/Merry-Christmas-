@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Merry Christmas</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Merry Christmas - Intro</title>
+    <link rel="shortcut icon" href="imgs/favicon.ico" type="image/x-icon" />
+
+    <link rel="stylesheet" type="text/css" href="css/normalize.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="all" />
+    
     <style>
-        /* Ép toàn bộ giao diện vào giữa màn hình */
+        /* CSS CỐT LÕI - Đảm bảo hộp quà nằm giữa */
         html, body {
             height: 100vh;
             width: 100vw;
@@ -18,16 +24,16 @@
             justify-content: center;
         }
 
-        /* Container trung tâm - Cốt lõi luôn nằm giữa */
-        .container {
-            position: relative; /* Thay fixed bằng relative vì body đã là flex center */
+        #wrap {
             display: flex;
             justify-content: center;
             align-items: center;
+            width: 100%;
+            height: 100%;
             z-index: 10;
         }
 
-        button {
+        button#box {
             cursor: pointer;
             background: none;
             border: none;
@@ -40,24 +46,23 @@
             position: relative;
         }
 
-        /* Hào quang trắng xung quanh */
-        button .glow {
+        /* Hào quang */
+        .glow {
             position: absolute;
             width: 100%;
             height: 100%;
             background: white;
             border-radius: 50%;
-            filter: blur(100px); /* Giảm nhẹ blur để tập trung vào tâm */
+            filter: blur(100px);
             opacity: 0.4;
             pointer-events: none;
         }
 
-        /* Phần chuyển động bay lên bay xuống - tách biệt với thẻ img */
+        /* Bay lên xuống */
         .box-wrapper {
-            width: 100%;
+            animation: mystery-box-animation 3s infinite ease-in-out;
             display: flex;
             justify-content: center;
-            animation: mystery-box-animation 3s infinite ease-in-out;
         }
 
         #box img {
@@ -67,19 +72,16 @@
             transition: transform 10s ease-in-out, opacity 5s ease-in-out; 
         }
 
-        /* Animation chỉ xử lý việc bay, không động vào scale */
         @keyframes mystery-box-animation {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-30px); }
         }
 
-        /* Lớp phủ chuyển cảnh tối dần */
+        /* Chuyển cảnh tối dần */
         .transition-background {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
             background-color: #151522;
             transition: opacity 10s ease-in-out;
             opacity: 0;
@@ -87,14 +89,45 @@
             pointer-events: none;
         }
 
-        .close {
-            opacity: 1 !important;
-        }
-    </style>
-</head>
-<body>
+        .close { opacity: 1 !important; }
 
-    <div class="container">
+        /* Loading Spinner */
+        #loading {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #151522;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .spinner {
+            width: 40px; height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #e74c3c;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+    
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/howler.min.js"></script>
+    <script type="text/javascript" src="js/typed.js"></script>
+    <script type="text/javascript" src="js/ThreeCanvas.js"></script>
+    <script type="text/javascript" src="js/Snow.js"></script>
+    <script type="text/javascript" src="js/Custom.js"></script>
+    
+</head>
+<body onLoad="initIntro();">
+
+    <div id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <div id="wrap">
         <button id="box">
             <div class="glow"></div>
             <div class="box-wrapper">
@@ -106,20 +139,25 @@
     <div id="transition" class="transition-background"></div>
 
     <script>
-        document.getElementById('box').addEventListener('click', function () {
-            // Fix: Dùng scale và opacity để biến mất mượt mà
-            const img = document.querySelector('#box img');
-            img.style.transform = 'scale(0)';
-            img.style.opacity = '0';
-            
-            // Màn hình tối dần
-            document.getElementById('transition').classList.add('close');
-            
-            // Chuyển trang sau 10s
+        function initIntro() {
+            // Ẩn loading sau khi trang sẵn sàng
             setTimeout(() => {
-                window.location.href = 'noel1.html';
-            }, 10000); 
-        });
+                document.getElementById('loading').style.display = 'none';
+            }, 1000);
+
+            // Xử lý sự kiện Click hộp quà
+            document.getElementById('box').addEventListener('click', function () {
+                const img = document.querySelector('#box img');
+                img.style.transform = 'scale(0)';
+                img.style.opacity = '0';
+                
+                document.getElementById('transition').classList.add('close');
+                
+                setTimeout(() => {
+                    window.location.href = 'noel1.html';
+                }, 10000); 
+            });
+        }
     </script>
 </body>
 </html>
