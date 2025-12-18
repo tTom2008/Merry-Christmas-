@@ -1,36 +1,63 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>Smashable Christmas Lights</title>
-<link rel="stylesheet" media="screen" href="christmaslights.css" />
-<script type="text/javascript" src="soundmanager2-nodebug-jsmin.js"></script>
-<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.6.0/build/yahoo-dom-event/yahoo-dom-event.js&2.6.0/build/animation/animation-min.js"></script>
-<script type="text/javascript" src="christmaslights.js"></script>
-<script type="text/javascript">
-var urlBase = './';
-soundManager.url = './';
-</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merry Christmas</title>
+    
+    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    
+    <style>
+        body { background-color: #151522; overflow: hidden; display: flex; align-items: center; justify-content: center; margin: 0; }
+        .container { width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
+        button { cursor: pointer; position: relative; width: 250px; height: 250px; display: flex; justify-content: center; align-items: center; background: none; border: none; padding: 0; }
+        button div { width: 100%; height: 100%; position: absolute; background: white; border-radius: 100%; filter: blur(150px); opacity: 0.4; }
+        #box img { width: 100%; height: 100%; animation: mystery-box-animation 3s infinite ease-in-out; position: relative; z-index: 2; }
+        
+        @keyframes mystery-box-animation { 
+            0%, 100% { transform: translateY(0); } 
+            50% { transform: translateY(-30px); } 
+        }
+        
+        .transition-background { position: fixed; left: 0; top: 0; width: 100%; height: 100%; background-color: #151522; transition: 2s; opacity: 0; z-index: -10; pointer-events: none; }
+        .close { opacity: 1; z-index: 1000; }
+
+        #loading { position: fixed; width: 100%; height: 100%; background: #151522; z-index: 9999; display: flex; justify-content: center; align-items: center; }
+        .spinner { width: 50px; height: 50px; border: 5px solid #fff; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
 </head>
 
 <body>
+    <div id="loading">
+        <div class="spinner"></div>
+    </div>
 
-<div>
+    <div class="container">
+        <button id="box">
+            <div></div>
+            <img src="imgs/mystery-box.png" alt="Gift Box">
+        </button>
+    </div>
 
- <div id="loading">
-  <h1>Christmas Light Smashfest 2008: Prototype</h1>
-  <h2>Rendering...</h2>
- </div>
+    <div id="transition" class="transition-background"></div>
 
- <div id="lights">
-  <!-- lights go here -->
- </div>
+    <script src="js/jquery.js"></script>
+    <script>
+        // Tắt màn hình loading khi trang tải xong
+        window.addEventListener('load', function() {
+            document.getElementById('loading').style.display = 'none';
+        });
 
- <div style="position:absolute;bottom:3px;left:3px">
-  <a href="?size=pico">pico</a> | <a href="?size=tiny">tiny</a> | <a href="?size=small">small</a> | <a href="?size=medium">medium</a> | <a href="?size=large">large</a>
- </div>
-
-</div>
-
-
-
+        // Xử lý khi click vào hộp quà
+        document.getElementById('box').addEventListener('click', function () {
+            document.getElementById('transition').classList.add('close');
+            setTimeout(() => {
+                // Chuyển đến trang noel1.html (đã xóa .html thừa)
+                window.location.href = 'noel1.html'; 
+            }, 2000); 
+        });
+    </script>
 </body>
 </html>
