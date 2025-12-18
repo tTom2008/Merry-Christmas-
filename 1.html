@@ -11,10 +11,25 @@
         .container { width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
         button { cursor: pointer; position: relative; width: 250px; height: 250px; display: flex; justify-content: center; align-items: center; background: none; border: none; padding: 0; }
         button div { width: 100%; height: 100%; position: absolute; background: white; border-radius: 100%; filter: blur(150px); opacity: 0.5; }
-        #box img { width: 100%; height: 100%; animation: mystery-box-animation 3s infinite ease-in-out; position: relative; z-index: 2; }
+        #box img { width: 100%; height: 100%; animation: mystery-box-animation 3s infinite ease-in-out; position: relative; z-index: 2; transition: 5s; }
+        
         @keyframes mystery-box-animation { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-30px); } }
-        .transition-background { position: fixed; left: 0; top: 0; width: 100%; height: 100%; background-color: #151522; transition: 2s; opacity: 0; z-index: -10; pointer-events: none; }
+        
+        /* CHỖ SỬA 1: Tăng thời gian tối dần lên 5s */
+        .transition-background { 
+            position: fixed; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: #151522; 
+            transition: 5s ease-in-out; 
+            opacity: 0; 
+            z-index: -10; 
+            pointer-events: none; 
+        }
         .close { opacity: 1; z-index: 1000; }
+        
         #loading { position: fixed; width: 100%; height: 100%; background: #151522; z-index: 9999; display: flex; justify-content: center; align-items: center; }
         .spinner { width: 50px; height: 50px; border: 5px solid #fff; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
@@ -36,11 +51,15 @@
         });
 
         document.getElementById('box').addEventListener('click', function () {
+            // Hiệu ứng hộp quà nhỏ lại dần khi nhấn
+            document.querySelector('#box img').style.transform = 'scale(0)';
+            
             document.getElementById('transition').classList.add('close');
+            
+            // CHỖ SỬA 2: Đợi đúng 5 giây (5000ms) mới chuyển trang
             setTimeout(() => {
-                // Đã sửa đường dẫn chuẩn xác noel1.html
                 window.location.href = 'noel1.html'; 
-            }, 2000); 
+            }, 7000); 
         });
     </script>
 </body>
