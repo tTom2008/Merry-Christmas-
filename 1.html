@@ -9,19 +9,28 @@
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     
     <style>
-        /* Chèn phần CSS của file quà bạn vừa gửi vào đây */
-        body { background-color: #151522; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        body { background-color: #151522; overflow: hidden; display: flex; align-items: center; justify-content: center; margin: 0; }
         .container { width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
-        button { cursor: pointer; position: relative; width: 250px; height: 250px; display: flex; justify-content: center; align-items: center; background: none; border: none; }
-        button div { width: 100%; height: 100%; position: absolute; background: white; border-radius: 100%; filter: blur(150px); }
-        #box img { width: 100%; height: 100%; animation: mystery-box-animation 3s infinite ease-in-out; }
-        @keyframes mystery-box-animation { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-50px); opacity: 30%; } }
-        .transition-background { position: absolute; left: 0; top: 0; width: 100%; min-height: 100vh; background-color: #151522; transition: 0.5s; opacity: 0; z-index: -10; }
+        button { cursor: pointer; position: relative; width: 250px; height: 250px; display: flex; justify-content: center; align-items: center; background: none; border: none; padding: 0; }
+        button div { width: 100%; height: 100%; position: absolute; background: white; border-radius: 100%; filter: blur(150px); opacity: 0.5; }
+        #box img { width: 100%; height: 100%; animation: mystery-box-animation 3s infinite ease-in-out; position: relative; z-index: 2; }
+        
+        @keyframes mystery-box-animation { 
+            0%, 100% { transform: translateY(0); } 
+            50% { transform: translateY(-30px); } 
+        }
+        
+        .transition-background { position: fixed; left: 0; top: 0; width: 100%; height: 100%; background-color: #151522; transition: 2s; opacity: 0; z-index: -10; pointer-events: none; }
         .close { opacity: 1; z-index: 1000; }
+
+        /* Loading screen đơn giản */
+        #loading { position: fixed; width: 100%; height: 100%; background: #151522; z-index: 9999; display: flex; justify-content: center; align-items: center; }
+        .spinner { width: 50px; height: 50px; border: 5px solid #fff; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 
-<body onLoad="loading();">
+<body>
     <div id="loading">
         <div class="spinner"></div>
     </div>
@@ -39,15 +48,22 @@
     <script type="text/javascript" src="js/Custom.js"></script>
 
     <script>
-        // BƯỚC 3: XỬ LÝ CLICK HỘP QUÀ
+        // Xử lý ẩn màn hình loading
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('loading');
+            setTimeout(() => { loader.style.display = 'none'; }, 500);
+        });
+
+        // XỬ LÝ CLICK HỘP QUÀ
         document.getElementById('box').addEventListener('click', function () {
+            // Hiệu ứng màn hình tối dần chậm rãi (2 giây)
             document.getElementById('transition').classList.add('close');
+            
             setTimeout(() => {
-                // Chuyển đến trang nội dung Giáng sinh chính của bạn
+                // Đã sửa đường dẫn trang đích từ noel1.html.html thành noel1.html
                 window.location.href = 'noel1.html'; 
-            }, 500);
+            }, 2000); 
         });
     </script>
-
 </body>
 </html>
