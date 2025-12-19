@@ -21,8 +21,8 @@
 </head>
 <body>
     <div id="ui-layer">
-        <div id="status" class="badge">🎄 Giang Sinh An Lanh 🎄</div>
-        <div class="guide">🖐 <b>Xòe:</b> Xoay (Tay càng xa tâm xoay càng nhanh) | 👌 <b>Pinch:</b> Phóng to | ✊ <b>Nắm:</b> Thu cây</div>
+        <div id="status" class="badge">🎄 Chờ khởi động... 🎄</div>
+        <div class="guide">🖐 <b>Xòe:</b> Xoay | 👌 <b>Pinch:</b> Xem ảnh | ✊ <b>Nắm:</b> Thu cây | ✌️ <b>Số 2:</b> Đổi 5 ảnh mới</div>
         <button id="btnStart" onclick="startSystem()">BẮT ĐẦU</button>
     </div>
     <div id="canvas-container"></div>
@@ -36,15 +36,117 @@
         const loader = new THREE.TextureLoader();
         loader.setCrossOrigin('anonymous'); 
 
-        const photoFiles = [
-            'https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/1.jpg','https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/2.jpg',
-            'https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/3.jpg','https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/4.jpg',
-            'https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/5.jpg','https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/6.jpg',
-            'https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/7.jpg','https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/8.jpg',
-            'https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/9.jpg','https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/10.jpg',
-            'https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/11.jpg'
-        ];
-        const photoTextures = photoFiles.map(f => loader.load(f));
+        // 1. TỰ ĐIỀN DANH SÁCH ẢNH TẠI ĐÂY
+        const allPhotos = ["https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img.jpeg"];
+        for (let i = 1; i <= 80; i++) {
+            // Bạn hãy tự sửa đuôi .JPG hoặc .jpg ở dòng dưới đây cho khớp với GitHub
+            allPhotos.push(
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img.jpeg",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(1).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(2).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(3).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(4).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(5).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(6).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(7).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(8).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(9).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(10).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(11).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(12).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(13).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(14).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(15).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(16).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(17).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(18).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(19).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(20).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(21).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(22).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(23).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(24).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(25).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(26).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(27).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(28).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(29).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(30).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(31).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(32).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(33).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(34).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(35).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(36).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(37).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(38).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(39).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(40).jpg",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(41).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(42).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(43).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(44).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(45).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(46).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(47).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(48).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(49).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(50).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(51).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(52).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(53).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(54).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(55).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(56).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(57).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(58).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(59).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(60).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(61).jpg",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(62).jpg",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(63).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(64).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(65).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(66).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(67).jpg",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(68).jpg",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(69).jpg",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(70).jpg",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(71).jpg",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(72).jpg",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(73).jpg",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(74).jpg",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(75).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(76).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(77).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(78).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(79).JPG",
+    "https://raw.githubusercontent.com/tTom2008/Noel-Picture/main/Img%20(80).JPG"
+);
+        }
+
+        let photoMeshes = [];
+        let canRefresh = true;
+
+        function get5RandomPhotos() {
+            return [...allPhotos].sort(() => 0.5 - Math.random()).slice(0, 5);
+        }
+
+        // Hàm cập nhật ảnh đơn giản (Lấy trực tiếp link bạn đã điền)
+        function refreshPhotos() {
+            const newFiles = get5RandomPhotos();
+            newFiles.forEach((src, i) => {
+                if (photoMeshes[i]) {
+                    loader.load(src, (tex) => {
+                        if (photoMeshes[i].material.map) photoMeshes[i].material.map.dispose();
+                        photoMeshes[i].material.map = tex;
+                        photoMeshes[i].material.needsUpdate = true;
+                    }, undefined, (err) => {
+                        console.error("Lỗi tải ảnh (Hãy kiểm tra lại đuôi file): " + src);
+                    });
+                }
+            });
+        }
 
         function createCustomTexture(type) {
             const canvas = document.createElement('canvas'); canvas.width = 128; canvas.height = 128;
@@ -65,12 +167,11 @@
         }
 
         const textures = { gold: createCustomTexture('gold_glow'), red: createCustomTexture('red_light'), gift: createCustomTexture('gift_red') };
-        const CONFIG = { goldCount: 2500, redCount: 300, giftCount: 150, explodeRadius: 65, photoOrbitRadius: 45, treeHeight: 70, treeBaseRadius: 35 };
+        const CONFIG = { goldCount: 2000, redCount: 200, giftCount: 100 };
 
-        let scene, camera, renderer, groupGold, groupRed, groupGift, photoMeshes = [], titleMesh, starMesh;
+        let scene, camera, renderer, groupGold, groupRed, groupGift, titleMesh, starMesh;
         let state = 'TREE', selectedIndex = 0, handX = 0.5;
-        let rotationAngle = 0; // Góc xoay tích lũy
-        let rotationVelocity = 0.005; // Vận tốc xoay mặc định
+        let rotationAngle = 0, rotationVelocity = 0.005;
 
         function init3D() {
             const container = document.getElementById('canvas-container');
@@ -79,13 +180,17 @@
             camera.position.z = 100;
             renderer = new THREE.WebGLRenderer({ antialias: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             container.appendChild(renderer.domElement);
 
             groupGold = createParticleSystem('gold', CONFIG.goldCount, 2.0);
             groupRed = createParticleSystem('red', CONFIG.redCount, 3.5);
             groupGift = createParticleSystem('gift', CONFIG.giftCount, 3.0);
-            createPhotos(); createDecorations(); animate();
+            
+            createPhotos(); 
+            createDecorations(); 
+            refreshPhotos(); 
+            animate();
         }
 
         function createParticleSystem(type, count, size) {
@@ -94,7 +199,7 @@
                 const h = Math.random() * 70, y = h - 35, maxR = (1 - (h / 70)) * 35;
                 const r = maxR * (type === 'gold' ? Math.sqrt(Math.random()) : 1), theta = Math.random() * Math.PI * 2;
                 pTree.push(r * Math.cos(theta), y, r * Math.sin(theta));
-                const phi = Math.acos(2 * Math.random() - 1), lam = 2 * Math.PI * Math.random(), rad = 65 * Math.cbrt(Math.random()) * (type === 'gift' ? 1.2 : 1);
+                const phi = Math.acos(2 * Math.random() - 1), lam = 2 * Math.PI * Math.random(), rad = 65 * Math.cbrt(Math.random());
                 pExp.push(rad * Math.sin(phi) * Math.cos(lam), rad * Math.sin(phi) * Math.sin(lam), rad * Math.cos(phi));
                 pPos.push(pTree[3*i], y, pTree[3*i+2]);
             }
@@ -106,9 +211,9 @@
         }
 
         function createPhotos() {
-            const geo = new THREE.PlaneGeometry(10, 10);
-            for(let i=0; i < photoFiles.length; i++) {
-                const mat = new THREE.MeshBasicMaterial({ map: photoTextures[i], side: 2, transparent: true });
+            const geo = new THREE.PlaneGeometry(12, 12);
+            for(let i=0; i < 5; i++) {
+                const mat = new THREE.MeshBasicMaterial({ side: 2, transparent: true, opacity: 0 });
                 const mesh = new THREE.Mesh(geo, mat); mesh.visible = false; scene.add(mesh); photoMeshes.push(mesh);
             }
         }
@@ -127,14 +232,9 @@
         function animate() {
             requestAnimationFrame(animate);
             const time = Date.now() * 0.001;
-            
-            // LOGIC MỚI: Tính vận tốc xoay dựa trên vị trí tay
-            // handX từ 0 (trái) đến 1 (phải). Tâm là 0.5.
-            const offsetFromCenter = handX - 0.5; 
-            // Vận tốc = Xoay nhẹ tự động (0.005) + Xoay theo tay (tỉ lệ 0.1)
-            const targetVelocity = 0.005 + (offsetFromCenter * 0.1);
-            rotationVelocity += (targetVelocity - rotationVelocity) * 0.1; // Làm mượt vận tốc
-            rotationAngle += rotationVelocity; // Cộng dồn góc xoay
+            const targetVelocity = 0.005 + ((handX - 0.5) * 0.1);
+            rotationVelocity += (targetVelocity - rotationVelocity) * 0.1; 
+            rotationAngle += rotationVelocity; 
 
             [groupGold, groupRed, groupGift].forEach(g => {
                 const pos = g.geometry.attributes.position.array;
@@ -147,10 +247,10 @@
 
             if (state === 'TREE') {
                 titleMesh.visible = starMesh.visible = true;
-                photoMeshes.forEach(m => { m.visible = false; m.scale.set(0,0,0); });
+                photoMeshes.forEach(m => { m.visible = false; });
             } else {
                 titleMesh.visible = starMesh.visible = false;
-                const step = (Math.PI * 2) / photoFiles.length;
+                const step = (Math.PI * 2) / 5;
                 let maxZ = -999, candidate = selectedIndex;
 
                 photoMeshes.forEach((mesh, i) => {
@@ -187,17 +287,35 @@
             const video = document.querySelector('.input_video'), canvas = document.getElementById('camera-preview'), ctx = canvas.getContext('2d'), statusDiv = document.getElementById('status');
             const hands = new Hands({locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`});
             hands.setOptions({ maxNumHands: 1, modelComplexity: 0, minDetectionConfidence: 0.5, minTrackingConfidence: 0.5 });
+            
             hands.onResults(results => {
                 ctx.clearRect(0,0,120,90); ctx.drawImage(results.image, 0, 0, 120, 90);
                 if(results.multiHandLandmarks.length > 0) {
                     const lm = results.multiHandLandmarks[0];
                     handX = lm[9].x; 
+                    
                     const avgDist = [8,12,16,20].reduce((sum, i) => sum + Math.hypot(lm[i].x-lm[0].x, lm[i].y-lm[0].y), 0) / 4;
                     const pinchDist = Math.hypot(lm[4].x-lm[8].x, lm[4].y-lm[8].y);
-                    if (avgDist < 0.2) { state = 'TREE'; statusDiv.innerText = "✊ Đang thu cây"; }
-                    else if (pinchDist < 0.05) { state = 'PHOTO'; statusDiv.innerText = "👌 Đang xem ảnh"; }
-                    else { state = 'EXPLODE'; statusDiv.innerText = "🖐 Di chuyển tay để điều tốc xoay"; }
-                } else { state = 'TREE'; handX = 0.5; statusDiv.innerText = "🎄 Chờ bàn tay..."; }
+                    
+                    const isForeUp = lm[8].y < lm[7].y, isMiddleUp = lm[12].y < lm[11].y;
+                    const isRingDown = lm[16].y > lm[15].y, isPinkyDown = lm[20].y > lm[19].y;
+
+                    if (isForeUp && isMiddleUp && isRingDown && isPinkyDown) {
+                        if (canRefresh) {
+                            statusDiv.innerText = "✌️ Đang bốc 5 ảnh mới...";
+                            refreshPhotos(); canRefresh = false;
+                            setTimeout(() => { canRefresh = true; }, 2000);
+                        }
+                    } else if (avgDist < 0.2) { 
+                        state = 'TREE'; statusDiv.innerText = "✊ Đang thu cây"; 
+                    } else if (pinchDist < 0.05) { 
+                        state = 'PHOTO'; statusDiv.innerText = "👌 Đang xem ảnh"; 
+                    } else { 
+                        state = 'EXPLODE'; statusDiv.innerText = "🖐 Di chuyển tay để xoay"; 
+                    }
+                } else { 
+                    state = 'TREE'; handX = 0.5; statusDiv.innerText = "🎄 Chờ bàn tay..."; 
+                }
             });
             new Camera(video, { onFrame: async () => { await hands.send({image: video}); }, width: 320, height: 240 }).start();
         }

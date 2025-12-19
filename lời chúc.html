@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merry Christmas Greeting</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            background: #060606;
+            display: flex; justify-content: center; align-items: center;
+            overflow: hidden;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        #glass-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            width: 85%;
+            max-width: 600px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+            animation: floating 5s ease-in-out infinite;
+        }
+
+        input {
+            width: 80%; padding: 12px; margin: 20px 0;
+            border-radius: 10px; border: 1px solid #FFD700;
+            background: rgba(255,255,255,0.1); color: white;
+            text-align: center; font-size: 1.1rem; outline: none;
+        }
+        button {
+            padding: 12px 30px; border-radius: 25px; border: none;
+            background: linear-gradient(45deg, #FFD700, #B8860B);
+            color: black; font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        button:hover { transform: scale(1.05); box-shadow: 0 0 15px #FFD700; }
+
+        .greeting-text {
+            font-family: 'Dancing Script', 'Segoe UI', cursive;
+            font-size: clamp(1.4rem, 4vw, 2.1rem);
+            background: linear-gradient(135deg, #FFD700 0%, #FFF8DC 50%, #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+            line-height: 1.6;
+        }
+
+        .sub-text {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #666;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .snow-dot {
+            position: absolute; background: white; border-radius: 50%; opacity: 0.5;
+            pointer-events: none; animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to { transform: translateY(100vh); }
+        }
+
+        .typed-cursor {
+            color: #FFD700;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="glass-card">
+        <div id="input-area">
+            <h2 style="color: #FFD700; font-family: 'Dancing Script'; font-size: 2.5rem;">Giáng Sinh cuối cấp, <br> Bạn tên là gì?</h2>
+            <input type="text" id="nameInput" placeholder="Nhập đầy đủ họ và tên..." autocomplete="off">
+            <br>
+            <button onclick="startMagic()">Xem điều bất ngờ</button>
+        </div>
+
+        <div id="display-area" style="display: none;">
+            <div class="greeting-text" id="typed"></div>
+            <div class="sub-text">A miracle is about to unfold...</div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+<script>
+        // Hàm làm sạch văn bản: Bỏ dấu tiếng Việt và chuẩn hóa về chữ thường
+        function getCleanText(str) {
+            if (!str) return "";
+            str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+            str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+            str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+            str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+            str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+            str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+            str = str.replace(/đ/g, "d");
+            return str.toLowerCase().trim();
+        }
+
+        function startMagic() {
+            const fullName = document.getElementById('nameInput').value.trim();
+            if (!fullName) {
+                alert("Hãy nhập tên nhé!");
+                return;
+            }
+
+            const cleanFull = getCleanText(fullName);
+            const nameParts = fullName.split(/\s+/);
+            const firstName = getCleanText(nameParts[nameParts.length - 1]);
+            const fullID = cleanFull.replace(/\s+/g, "");
+
+            let selectedWish = "";
+            let userType = "lop"; // Mặc định là album lớp
+
+            // 1. KIỂM TRA NẾU LÀ THẦY TUẤN ANH
+            if (cleanFull.includes("tuan anh")) {
+                userType = "thay"; // Xác định là album thầy
+                selectedWish = `Kính gửi Thầy Tuấn Anh! 🎄 <br> Cảm ơn Thầy đã dìu dắt chúng em suốt năm lớp 12. ^500 <br> Chúc Thầy Giáng Sinh an lành, dồi dào sức khỏe để cùng chúng em về đích thành công! ✨`;
+            } 
+            else {
+                // 2. NẾU LÀ HỌC SINH (CHIA NAM/NỮ ĐỂ LẤY LỜI CHÚC)
+                userType = "lop"; // Xác định là album lớp
+                const listNuGoc = ["ngoc han", "my han", "thu huong", "bao ngoc", "nhu ngoc", "tieu phung", "minh thu", "thu trang", "ngoc tram", "cam tu", "thanh phuong"];
+                const laNu = listNuGoc.some(tenNu => cleanFull.includes(tenNu));
+
+                if (laNu) {
+                    const wishesNu = [
+                        `Chào ${fullName}! ❄️ <br> Chúc bạn ôn thi hiệu quả, đỗ đúng nguyện vọng 1 nhé! ✨`,
+                        `${fullName} ơi! 🎄 <br> Giáng Sinh vui vẻ! Luôn giữ vững phong độ học tập để cá chép hóa rồng! ❤️`,
+                        `Gửi ${fullName}, 🎁 <br> Noel ấm áp nhé! Chúc bạn xử gọn đống đề cương và đạt điểm cao! ✨`,
+                        `Merry Christmas, ${fullName}! ❄️ <br> Chúc bạn tự tin để vượt qua các kỳ thi sắp tới thật nhẹ nhàng!`,
+                        `Chúc ${fullName} 🌟 <br> Luôn rạng rỡ và cầm chắc tấm vé vào trường Đại học mơ ước nhé!`,
+                        `${fullName} thân mến! 🎄 <br> Noel cuối cấp rồi, xả stress một chút rồi quay lại chiến đấu thôi!`,
+                        `Chào ${fullName}! ❄️ <br> Chúc bạn học giỏi, thi tốt và luôn là niềm tự hào của lớp!`,
+                        `${fullName} à! 🎁 <br> Noel vui vẻ, bớt áp lực lại và tập trung cao độ để thành công nhé!`,
+                        `Gửi tới ${fullName}, ❤️ <br> Chúc bạn một mùa đông ấm lòng và thi cử thuận lợi nhất!`,
+                        `Merry Xmas, ${fullName}! 🧸 <br> Chúc bạn sớm nhận được tin vui đỗ Đại học như mong đợi! ✨`
+                    ];
+                    selectedWish = wishesNu[Math.floor(Math.random() * wishesNu.length)];
+                } else {
+                    const wishesNam = [
+                        `Chào ${fullName}! ❄️ <br> Noel cháy nhé! Chúc ông thi đâu đỗ đó, phong độ vững vàng! ✨`,
+                        `${fullName} ơi! 🎄 <br> Giáng Sinh an lành! Sớm có "gấu" sưởi ấm và đỗ nguyện vọng 1! ❤️`,
+                        `Gửi ${fullName}, 🎁 <br> Chúc ông ôn thi hiệu quả, sớm trở thành Tân sinh viên trường Top! ✨`,
+                        `Merry Christmas, ${fullName}! ❄️ <br> Mạnh mẽ lên, cánh cửa Đại học đang chờ ông chinh phục!`,
+                        `Chúc ${fullName} 🌟 <br> Giữ vững bản lĩnh, học tập xuyên đêm và đỗ NV1 xuất sắc nhé!`,
+                        `Chào chiến hữu ${fullName}! 🎄 <br> Noel vui, tập trung cao độ cho kỳ thi sắp tới nào!`,
+                        `Chúc ${fullName} ❄️ <br> Có mùa Noel ý nghĩa và đạt điểm tuyệt đối môn sở trường!`,
+                        `${fullName} thân mến! 🎁 <br> Nghỉ xả hơi chút rồi quay lại "cày" để hóa rồng nhé! 🐉`,
+                        `Gửi ${fullName}, ❤️ <br> Chúc ông tràn đầy năng lượng để vượt qua thử thách lớp 12!`,
+                        `Merry Xmas, ${fullName}! 🥂 <br> Nâng ly cho tương lai rạng ngời phía trước của ông!`,
+                        `Chúc ${fullName} 🌟 <br> May mắn luôn đồng hành trong từng con số đêm nay!`,
+                        `${fullName} à! ❄️ <br> Chúc chàng trai lớp mình kiên trì với đam mê và thành công!`,
+                        `Gửi ${fullName}, 🎁 <br> Chúc ông Noel ấm, tâm thế vững để chiến đấu thi cử!`,
+                        `Merry Christmas, ${fullName}! 🎄 <br> Chúc ông học giỏi, đẹp trai và sớm thành công!`,
+                        `Chúc ${fullName} 🎈 <br> Có những phút giây thư giãn thật sự trước cuộc đua lớn!`,
+                        `Chào ${fullName}! ❄️ <br> Noel an lành! Chúc ông đạt kết quả cao nhất kỳ thi tới!`,
+                        `${fullName} thân mến! ✨ <br> Mong phép màu Noel giúp ông đỗ vào trường hằng mong ước!`,
+                        `Gửi ${fullName}, 🧸 <br> Chúc ông luôn tự tin, quyết đoán trong mọi bài thi!`,
+                        `Merry Xmas, ${fullName}! 🎀 <br> Cảm ơn ông đã cùng đồng hành suốt 3 năm qua!`,
+                        `Chúc ${fullName} 🌟 <br> Noel ấm, học tập bứt phá, tương lai rạng ngời!`,
+                        `Chào ${fullName}! 🎄 <br> Chúc ông bản lĩnh như chiến binh, đỗ trường Top nhé!`,
+                        `${fullName} ơi! ❄️ <br> Noel vui vẻ! Luôn lạc quan và yêu đời như thế nhé!`,
+                        `Gửi tới ${fullName}, ❤️ <br> Chúc ông trưởng thành và vững vàng trên con đường đã chọn!`,
+                        `Merry Christmas, ${fullName}! 🎁 <br> Nhận sớm giấy báo nhập học làm quà Noel nhé!`,
+                        `Chúc ${fullName} 🌟 <br> Bứt phá mạnh mẽ và gặt hái thành công ngoài mong đợi!`,
+                        `Chào ${fullName}! 🎠 <br> Noel an lành! Giữ vững tinh thần để chiến thắng kỳ thi!`,
+                        `${fullName} thân mến! 🕯️ <br> Mong ánh sáng Noel soi lối cho ông đi đến thành công!`,
+                        `Gửi ${fullName}, ✨ <br> Chúc ông một mùa đông ấm lòng bên những người thân thương!`,
+                        `Merry Xmas, ${fullName}! 🚀 <br> Tiến về phía trước, thành công đang chờ ông!`,
+                        `Chúc ${fullName} 🥂 <br> Một đêm Giáng Sinh tuyệt vời và đầy dự định mới mẻ!`
+                    ];
+                    selectedWish = wishesNam[Math.floor(Math.random() * wishesNam.length)];
+                }
+            }
+
+            // LƯU DỮ LIỆU VÀO MÁY
+            localStorage.setItem('visitorName', firstName);
+            localStorage.setItem('visitorID', fullID);
+            localStorage.setItem('userType', userType); // QUAN TRỌNG: Lưu loại là 'thay' hoặc 'lop'
+
+            // Hiệu ứng chuyển cảnh
+            document.getElementById('input-area').style.display = 'none';
+            document.getElementById('display-area').style.display = 'block';
+
+            new Typed('#typed', {
+                strings: [selectedWish],
+                typeSpeed: 45,
+                showCursor: true,
+                onComplete: function() {
+                    setTimeout(function() {
+                        $('body').fadeOut(1000, function() {
+                            window.location.href = "noel1.html"; 
+                        });
+                    }, 3500);
+                }
+            });
+        }
+
+        // Tuyết rơi (giữ nguyên)
+        $(document).ready(function() {
+            for (let i = 0; i < 60; i++) {
+                let dot = document.createElement('div');
+                dot.className = 'snow-dot';
+                dot.style.left = Math.random() * 100 + 'vw';
+                dot.style.top = -10 + 'px';
+                dot.style.width = dot.style.height = Math.random() * 3 + 2 + 'px';
+                dot.style.animationDuration = Math.random() * 3 + 5 + 's';
+                dot.style.animationDelay = Math.random() * 5 + 's';
+                document.body.appendChild(dot);
+            }
+        });
+    </script>
+  
+</body>
+</html>
